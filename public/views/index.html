@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BK Lounge</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body>
+    <div id='header'>
+      <div id='profile'>
+        <h3>Profile</h3>
+      </div>
+      <div id='settings'>
+        <h3>Settings</h3>
+      </div>
+    </div>
+    <div id='main'>
+      <div id='sidebar'>
+        <h1>Rooms</h1>
+        <ul id='rooms'>
+          <li>Room 1</li>
+          <li>Room 2</li>
+          <li>Room 3</li>
+        </ul>
+
+        <h1>Members</h1>
+        <ul id='members'></ul>
+
+      </div>
+      <div id='messages-container'>
+        <ul id="messages"></ul>
+        <form id="form" action="">
+          <input id="input" autocomplete="off" /><button>Send</button>
+        </form>
+      </div>
+    </div>
+    <script src='/socket.io/socket.io.js'></script>
+    <script src='/views/index.js'></script>
+  </body>
+</html>

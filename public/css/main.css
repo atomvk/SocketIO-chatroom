@@ -1,0 +1,145 @@
+html{
+    height: 100%;
+    margin: 0;
+}
+
+body { 
+    font-family: Roboto, sans-serif; 
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+#main {
+    flex: 1 1 auto;
+    display: flex;    
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+#header {
+    flex: 0 0 auto;
+    display:flex;
+    background: #616161;
+    color: #ededed;
+}
+#profile{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#settings {
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-left: auto;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    border-right: solid lightgray 2px;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+#sidebar > h1 {
+    text-align: center;
+    background: #dbdbdb;
+    padding-top: 20px;
+    margin: 0;
+}
+#sidebar > ul > li {
+    text-align: right;
+    list-style-type: none; 
+    margin: auto; 
+    padding-left: 10px; 
+    padding-right: 10px;
+}
+
+
+#form { 
+    background: rgba(0, 0, 0, 0.15);
+    flex: 0 0 3rem;
+    display: flex;
+    padding: 0.25rem; 
+    bottom: 0; 
+    left: 0;
+    right: 0; 
+    box-sizing: border-box; 
+    backdrop-filter: blur(10px); 
+}
+
+#input {
+    border: none; 
+    padding: 0 1rem; 
+    flex-grow: 1; 
+    border-radius: 2rem; 
+    margin: 0.25rem; 
+}
+
+#input:focus {
+    outline: none; 
+}
+
+#form > button {
+    background: #333; 
+    border: none; 
+    padding: 0 1rem; 
+    margin: 0.25rem; 
+    border-radius: 3px; 
+    outline: none; 
+    color: #fff; 
+}
+
+#messages-container {
+    width: 85%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: column;    
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+#messages { 
+    flex: 1 1 auto;
+    list-style-type: none; 
+    margin: 0; 
+    padding-left: 10px; 
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#messages > li { 
+    background: #808080;
+    color: #fff; 
+    align-self: flex-start;
+    padding: 10px 10px 10px 10px;
+    border-radius: 25px 25px 25px 0px;
+    margin-top: 15x;
+    margin-bottom: 15px;
+    max-width: 60%;
+    width: max-content;
+    overflow-wrap: break-word;
+}
+
+#messages > li.notification {
+    background: none;
+    color:#bfbfbf;
+    width: max-content;
+    align-self: center;
+    margin-top: 0px;
+}
+
+#messages > li.private {
+    background: #ff704d;
+}
+
+#messages > li.own {
+    background: #6699ff;
+    align-self: flex-end;
+    border-radius: 25px 25px 0px 25px;
+}
