@@ -12,7 +12,6 @@ class User {
   constructor(id, name) {
     this.id = id;
     this.name = name;
-    this.connected = true;
     this.typing = false;
   }
 }
@@ -39,27 +38,41 @@ io.on('connection', (socket) => {
     if (!name) name = 'Anonymous';
     let newUser = new User(socket.id, name);
     users.push(newUser);
-    let msg = new Message('notification', newUser, '', newUser.name + ' connected');
     io.emit('current user', newUser);
     io.emit('users', users);
-    io.emit('chat message', msg);
+    io.emit('chat message', new Message('notification', '', '', newUser.name + ' connected'));
   });
 
   socket.on('disconnect', () => {
     let oldUser = users.filter(user => socket.id == user.id)[0];
     if (typeof(oldUser) != 'undefined') {
-      let msg = new Message('notification', oldUser,'', oldUser.name + ' disconnected');
-      io.emit('chat message', msg);
+      io.emit('chat message', msg = new Message('notification', '','', oldUser.name + ' disconnected'));
       users = users.filter(user => socket.id != user.id);
     }
   });
 
+  socket.on('typing', (value) => {
+    let currentUser = users.filter(user => socket.id == user.id)[0];
+    currentUser.typing = value;
+    sendTypingMessage(users.filter(user => user.typing == true));
+  });
+
   socket.on('chat message', (msg) => {
-    let message = new Message(msg.type, msg.sender, msg.recipient, msg.value);
-    io.emit('chat message', message);
+    io.emit('chat message', new Message(msg.type, msg.sender, msg.recipient, msg.value));
   });
 });
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log('listening on *:3000');
-});
+server.listen(process.env.PORT || 3000);
+
+function sendTypingMessage(typers) {
+  if (typers.length > 1) {
+    io.emit('chat message', new Message('typing', '', '', typers.length + ' people are typing...'));
+  }
+  else if (typers.length > 0){
+    io.emit('chat message', new Message('typing','', '', typers[0].name + ' is typing...'));
+  }
+  else{
+    io.emit('chat message', new Message('typing','', '',''));
+  }
+  return;
+}

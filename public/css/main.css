@@ -157,3 +157,11 @@ body {
     align-self: flex-end;
     border-radius: 25px 25px 0px 25px;
 }
+
+#messages > li.typing {
+    background: none;
+    color:#cccccc;
+    width: max-content;
+    align-self: center;
+    margin-top: 0px;
+}

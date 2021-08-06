@@ -5,55 +5,30 @@ let messages = document.getElementById('messages');
 let form = document.getElementById('form');
 let input = document.getElementById('input');
 let messagesContainer = document.getElementById('messages-container');
-let typingNotification = document.getElementById('typing');
+
 
 let currentUser;
 let typingCount = 0;
 let members = [];
 let rooms = [];
+let typing = false;
+let timeout;
 
 window.onload = function () {
-    let name = prompt('Enter your name:');
-    socket.emit('entered', name);
+    socket.emit('entered', prompt('Enter your name:'));
 };
 
-input.addEventListener('input', function (e) {
-
+input.onkeyup = function (event) {
     //looks like typing count needs to go to the node since not shared across instances - not getting a
-    if (!e.target.value || e.target.value == '') {
-        typingNotification = document.getElementById('typing');
-        if(typeof(typingNotification) == 'undefined' || typingNotification == null) return;
-        typingCount --;
-        if (typingCount <= 0){
-            typingCount = 0;
-            messages.removeChild(typingNotification);
-            currentUser.typing = false;
-        }
+    if (event.keyCode != 13){
+        onKeyDownNotEnter();
     }
-    else {
-        if (currentUser.typing == false){
-            if (typingCount == 0){
-                let newTypingNotification = document.createElement('li');
-                msg = {
-                    type: 'notification',
-                    sender: currentUser,
-                    recicpient: '',
-                    value: currentUser.name + ' is typing...'
-                }
-                socket.emit('chat message', msg);
-                typingCount ++;
-            }
-            else{
-                typingCount ++;
-                typingNotification = document.getElementById('typing');
-                typingNotification.textContent = typingCount + ' people are typing...';
-            }
-            currentUser.typing = true;
-        }
+    else if(event.keyCode == 13) {
+        //socket.emit('typing', false);
     }
-})
+};
 
-form.addEventListener('submit', function (e) {
+form.onsubmit = function (e) {
     e.preventDefault();
     if (input.value) {
         msg = {
@@ -63,9 +38,10 @@ form.addEventListener('submit', function (e) {
             value: input.value
         }
         socket.emit('chat message', msg);
+        socket.emit('typing', false);
         input.value = null;
     }
-});
+};
 
 socket.on('current user', function (user) {
     if (!currentUser) currentUser = user;
@@ -85,6 +61,7 @@ socket.on('users', function (users) {
 
 socket.on('chat message', function (msg) {
     let item = document.createElement('li');
+    removeOldTypingMessage(msg);
     addMessageTypeClass(item, msg);
     addOwnMessageClass(item, msg);
     messages.appendChild(item);
@@ -95,11 +72,24 @@ socket.on('chat message', function (msg) {
     });
 })
 
+function removeOldTypingMessage(msg) {
+    if (msg.type != 'typing') return;
+    let typingNotification = document.getElementById('typing');
+    if (typingNotification) {
+        typingNotification.parentNode.removeChild(typingNotification);
+    }
+}
+
 function addMessageTypeClass(item, msg) {
     switch (msg.type) {
         case 'notification':
             item.textContent = msg.value;
             item.classList.add('notification');
+            break;
+        case 'typing':
+            item.textContent = msg.value;
+            item.classList.add('notification');
+            item.id = 'typing';
             break;
         case 'private':
             item.textContent = msg.senderName + ' (private): ' + msg.value;
@@ -117,8 +107,24 @@ function addMessageTypeClass(item, msg) {
 }
 
 function addOwnMessageClass(item, msg) {
-    if (msg.sender == currentUser.id && msg.type != 'notification') {
+    if (msg.sender == currentUser.id) {
         item.classList.add('own');
     }
     return item;
+}
+
+function timeoutFunction(){
+    typing = false;
+    socket.emit('typing', false);
+  }
+  
+function onKeyDownNotEnter(){
+    if(typing == false) {
+        typing = true;
+        socket.emit('typing', true);
+        setTimeout(timeoutFunction, 3000);
+    } else {
+        clearTimeout(timeout);
+        setTimeout(timeoutFunction, 3000);
+    }
 }
