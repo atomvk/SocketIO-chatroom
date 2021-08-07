@@ -39,15 +39,29 @@ body {
     margin-left: auto;
 }
 
-#sidebar {
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-    width: 15%;
-    border-right: solid #666666 1px;
-    background: #474747;
-    color: #fcfcfc;
-    overflow-wrap: break-word;
+@media screen and (max-width: 900px) {
+    #sidebar {
+        flex: 1 1 auto;
+        display: none;
+        flex-direction: column;
+        width: 20%;
+        border-right: solid #666666 1px;
+        background: #fcfcfc;
+        color: #fcfcfc;
+        overflow-wrap: break-word;
+    }
+}
+@media screen and (min-width: 900px) {
+    #sidebar {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        width: 20%;
+        border-right: solid #666666 1px;
+        background: #474747;
+        color: #fcfcfc;
+        overflow-wrap: break-word;
+    }
 }
 
 #sidebar > h1 {
@@ -83,6 +97,9 @@ body {
     background: #474747;
     color: #fcfcfc;
     text-align: right;
+    font-size: 20px;
+    resize: none;
+    
 }
 
 #input:focus {
@@ -98,15 +115,16 @@ body {
     border-radius: 3px; 
     outline: none; 
     color: #fcfcfc; 
+    font-size: 20px;
 }
 
 #content-container {
     flex: 1 1 auto;
-    width: 85%;
+    width: 80%;
     display: flex;
     flex-flow: column;    
     box-sizing: border-box;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 #messages-container {
@@ -125,6 +143,7 @@ body {
     padding-right: 10px;
     display: flex;
     flex-direction: column;
+    font-size: 20px;
 }
 
 #messages > li { 
