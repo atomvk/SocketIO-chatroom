@@ -116,15 +116,15 @@ function addOwnMessageClass(item, msg) {
 function timeoutFunction(){
     typing = false;
     socket.emit('typing', false);
-  }
+  }     
   
 function onKeyDownNotEnter(){
     if(typing == false) {
         typing = true;
         socket.emit('typing', true);
-        setTimeout(timeoutFunction, 3000);
+        timeout = setTimeout(timeoutFunction, 3000);
     } else {
-        clearTimeout(timeout);
-        setTimeout(timeoutFunction, 3000);
+        window.clearTimeout(timeout);
+        timeout = setTimeout(timeoutFunction, 3000);
     }
 }
