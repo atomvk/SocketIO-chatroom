@@ -136,6 +136,7 @@ body {
 }
 
 #messages { 
+    color: #fcfcfc; 
     list-style-type: none; 
     margin: 0; 
     flex: 1 1 auto;
@@ -146,40 +147,52 @@ body {
     font-size: 20px;
 }
 
-#messages > li { 
+#messages > li > div.sender{
+    text-align: left;
+    font-weight: 100;
+    font-size: 15px;
+    padding-bottom: 5px;
+}
+
+#messages > li > div.content{ 
     background: #808080;
-    color: #fcfcfc; 
-    align-self: flex-start;
     padding: 10px 10px 10px 10px;
     border-radius: 25px 25px 25px 0px;
     margin-top: 15x;
     margin-bottom: 15px;
-    max-width: 60%;
     width: max-content;
     overflow-wrap: break-word;
 }
-
-#messages > li.notification {
+#messages > li > div.notification {
     background: none;
     color:#cccccc;
+}
+
+#messages > li > div.private {
+    background: #ff704d;
+}
+
+#messages > li > div.own {
+    background: #6699ff;
+    border-radius: 25px 25px 0px 25px;
+}
+
+#messages > li > div.typing {
+    background: none;
+    color:#cccccc;
+}
+
+#messages > li.notification {
     width: max-content;
     align-self: center;
     margin-top: 0px;
 }
 
-#messages > li.private {
-    background: #ff704d;
-}
-
 #messages > li.own {
-    background: #6699ff;
     align-self: flex-end;
-    border-radius: 25px 25px 0px 25px;
 }
 
 #messages > li.typing {
-    background: none;
-    color:#cccccc;
     width: max-content;
     align-self: center;
     margin-top: 0px;

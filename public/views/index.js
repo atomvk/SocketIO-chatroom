@@ -19,12 +19,12 @@ window.onload = function () {
 };
 
 input.onkeyup = function (event) {
-    //looks like typing count needs to go to the node since not shared across instances - not getting a
     if (event.keyCode != 13){
         onKeyDownNotEnter();
     }
     else if(event.keyCode == 13) {
-        //socket.emit('typing', false);
+        clearTimeout(timeout);
+        typing = false;
     }
 };
 
@@ -63,7 +63,8 @@ socket.on('chat message', function (msg) {
     let item = document.createElement('li');
     removeOldTypingMessage(msg);
     addMessageTypeClass(item, msg);
-    addOwnMessageClass(item, msg);
+    addSenderText(item, msg);
+    addMessageText(item, msg);
     messages.appendChild(item);
     messagesContainer.scrollTo({
         top: messagesContainer.scrollHeight,
@@ -83,40 +84,47 @@ function removeOldTypingMessage(msg) {
 function addMessageTypeClass(item, msg) {
     switch (msg.type) {
         case 'notification':
-            item.textContent = msg.value;
             item.classList.add('notification');
             break;
         case 'typing':
-            item.textContent = msg.value;
             item.classList.add('notification');
             item.id = 'typing';
             break;
         case 'private':
-            item.textContent = msg.senderName + ' (private): ' + msg.value;
             item.classList.add('private');
             break;
         default:
             if (msg.sender == currentUser.id) {
-                item.textContent = msg.value;
+                item.classList.add('own');
                 break;
             }
-            item.textContent = msg.senderName + ' :\n' + msg.value;
             break;
     }
     return item;
 }
 
-function addOwnMessageClass(item, msg) {
-    if (msg.sender == currentUser.id) {
-        item.classList.add('own');
-    }
+function addSenderText(item, msg) {
+    if (!msg.senderName || msg.sender == currentUser.id) return;
+    let senderName = document.createElement('div');
+    senderName.classList.add('sender');
+    senderName.innerHTML = msg.senderName;
+    item.appendChild(senderName);
+    return item;
+}
+
+function addMessageText(item, msg) {
+    let messageText = document.createElement('div');
+    messageText.classList.add('content');
+    addMessageTypeClass(messageText, msg);
+    messageText.innerHTML = msg.value;
+    item.appendChild(messageText);
     return item;
 }
 
 function timeoutFunction(){
     typing = false;
     socket.emit('typing', false);
-  }     
+}     
   
 function onKeyDownNotEnter(){
     if(typing == false) {
