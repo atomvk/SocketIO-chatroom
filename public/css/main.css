@@ -12,6 +12,7 @@ body {
     overflow: hidden;
     box-sizing: border-box;
     background: #474747;
+    color: #fcfcfc;
 }
 
 #main {
@@ -77,15 +78,93 @@ body {
     padding-right: 10px;
 }
 
-#form { 
-    flex: 0 0 8%;
-    display: flex;
+#form-container { 
+    flex: 0 0 20%;
+    flex-flow: column;
     padding: 0.25rem; 
-    bottom: 0; 
+}
+
+#private-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+
+#private-container > #private {
+    background: #ff704d;
+    flex: 0 0 1rem;
+    height: 30%;
+    border: none; 
+    padding: 0 1rem; 
+    border-radius: 3px; 
+    outline: none; 
+    color: #fcfcfc; 
+    font-size: 20px;
+}
+
+#private-container > #private-recipient-name {
+    display: none;
+    padding-left: 15px;
+    margin: 0;
+}
+
+#private-container > #clear-private {
+    background: #6699ff;
+    flex: 0 0 1rem;
+    height: 30%;
+    margin-left: auto;
+    border: none; 
+    padding: 0 1rem; 
+    border-radius: 3px; 
+    outline: none; 
+    color: #fcfcfc; 
+    font-size: 20px;
+    display: none;
+}
+
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    padding-top: 100px; 
     left: 0;
-    right: 0; 
-    box-sizing: border-box; 
-    backdrop-filter: blur(10px); 
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4); 
+  }
+  
+.modal-content {
+    background-color: #474747;
+    color: #fcfcfc;
+    align-self: center;
+    margin: auto;
+    padding: 20px;
+    width: 80%;
+    font-size: 20px;
+    text-align: center;
+}
+
+.modal-content > ul {
+    list-style-type: none;
+    text-align: left;
+}
+
+.modal-content > ul > li{
+    padding-top: 5px;
+}
+
+.modal-content > ul > li:hover{
+    cursor: pointer;
+}
+
+#form { 
+    flex: 1 1 80%;
+    display: flex;
+    height: 70%; 
 }
 
 #input {
@@ -98,8 +177,6 @@ body {
     color: #fcfcfc;
     text-align: right;
     font-size: 20px;
-    resize: none;
-    
 }
 
 #input:focus {
@@ -108,15 +185,15 @@ body {
 
 #form > button {
     background: #6699ff;
-    flex: 0 0 3rem; 
+    flex: 0 0 1rem; 
     border: none; 
     padding: 0 1rem; 
-    margin: 0.25rem; 
     border-radius: 3px; 
     outline: none; 
     color: #fcfcfc; 
     font-size: 20px;
 }
+
 
 #content-container {
     flex: 1 1 auto;
@@ -147,11 +224,39 @@ body {
     font-size: 20px;
 }
 
+#messages > li { 
+    max-width: 60%;
+    overflow-wrap: break-word;
+}
+
+#messages > li.content{ 
+    align-self: flex-start;
+}
+
+#messages > li.notification {
+    align-self: center;
+    margin-top: 0px;
+}
+
+#messages > li.own {
+    align-self: flex-end;
+}
+
+#messages > li.typing {
+    align-self: center;
+    margin-top: 0px;
+}
+
 #messages > li > div.sender{
     text-align: left;
     font-weight: 100;
     font-size: 15px;
     padding-bottom: 5px;
+}
+
+#messages > li > div { 
+    overflow-wrap: break-word;
+    max-width: max-content;
 }
 
 #messages > li > div.content{ 
@@ -160,8 +265,6 @@ body {
     border-radius: 25px 25px 25px 0px;
     margin-top: 15x;
     margin-bottom: 15px;
-    width: max-content;
-    overflow-wrap: break-word;
 }
 #messages > li > div.notification {
     background: none;
@@ -180,20 +283,4 @@ body {
 #messages > li > div.typing {
     background: none;
     color:#cccccc;
-}
-
-#messages > li.notification {
-    width: max-content;
-    align-self: center;
-    margin-top: 0px;
-}
-
-#messages > li.own {
-    align-self: flex-end;
-}
-
-#messages > li.typing {
-    width: max-content;
-    align-self: center;
-    margin-top: 0px;
 }

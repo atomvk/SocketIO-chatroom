@@ -48,6 +48,7 @@ io.on('connection', (socket) => {
     if (typeof(oldUser) != 'undefined') {
       io.emit('chat message', msg = new Message('notification', '','', oldUser.name + ' disconnected'));
       users = users.filter(user => socket.id != user.id);
+      io.emit('users', users);
     }
   });
 
@@ -58,7 +59,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chat message', (msg) => {
-    io.emit('chat message', new Message(msg.type, msg.sender, msg.recipient, msg.value));
+    if (msg.type == 'private'){
+      io.to(msg.recipient.id).to(msg.sender.id).emit('chat message', new Message(msg.type, msg.sender, msg.recipient, msg.value));
+    }
+    else {
+      io.emit('chat message', new Message(msg.type, msg.sender, msg.recipient, msg.value));
+    }
   });
 });
 

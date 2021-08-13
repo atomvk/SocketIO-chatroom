@@ -25,18 +25,30 @@
           <li>Room 2</li>
           <li>Room 3</li>
         </ul>
-
         <h1>Members</h1>
         <ul id='members'></ul>
-
       </div>
       <div id='content-container'>
         <div id='messages-container'>
           <ul id='messages'></ul>
         </div>
-        <form id='form' action=''>
-          <input id='input' autofocus='true' autocomplete='off' placeholder='message...' /><button>Go</button>
-        </form>
+        <div id='form-container'>
+          <div id='private-container'>
+            <button id='private' onclick='handlePrivateClick()'>Private</button>
+            <p id='private-recipient-name'></p>
+            <button id='clear-private' onclick='handleClearPrivateClick()'>Clear</button>
+          </div>
+          <div id="private-modal" class="modal">
+            <div class="modal-content">
+              <h3>Send Private Message</h3>
+              <ul id='private-members'></ul>
+            </div>
+          </div>
+          <form id='form' action=''>
+            <input id='input' autofocus='true' autocomplete='off' placeholder='message...' />
+            <button>Go</button>
+          </form>
+        </div>
       </div>
     </div>
     <script src='/socket.io/socket.io.js'></script>
