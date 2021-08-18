@@ -7,12 +7,14 @@ const { Server } = require('socket.io');
 const io = new Server(server);
 
 let users = [];
+let userNumber = 0;
 
 class User {
   constructor(id, name) {
     this.id = id;
     this.name = name;
     this.typing = false;
+    this.number = userNumber;
   }
 }
 
@@ -37,6 +39,7 @@ io.on('connection', (socket) => {
   socket.on('entered', (name) => {
     if (!name) name = 'Anonymous';
     let newUser = new User(socket.id, name);
+    userNumber++;
     users.push(newUser);
     io.emit('current user', newUser);
     io.emit('users', users);

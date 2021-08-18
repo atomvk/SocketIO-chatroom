@@ -68,14 +68,14 @@ function handlePrivateClick(){
     for (user of members.filter(member => member.id != currentUser.id)){
         let member = document.createElement('li');
         member.textContent = user.name;
-        member.id = user.id;
+        member.id = user.number;
         member.addEventListener('click', handlePrivateRecipientSelection);
         privateMemberSelection.append(member);
     }
 }
 
 function handlePrivateRecipientSelection(event) {
-    privateRecipient = members.filter(member => member.id == event.target.id)[0];
+    privateRecipient = members.filter(member => member.number == event.target.id)[0];
     modal.style.display = 'none';
     privateRecipientName.textContent = 'Sending a private message to: ' + privateRecipient.name;
     privateRecipientName.style.display = 'flex';

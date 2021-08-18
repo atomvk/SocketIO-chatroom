@@ -227,24 +227,29 @@ body {
 #messages > li { 
     max-width: 60%;
     overflow-wrap: break-word;
+    display: flex;
+    flex-flow: column;
 }
 
-#messages > li.content{ 
+#messages > li.content, li.private{ 
     align-self: flex-start;
 }
 
 #messages > li.notification {
     align-self: center;
     margin-top: 0px;
+    align-items: center;
 }
 
 #messages > li.own {
     align-self: flex-end;
+    align-items: flex-end;
 }
 
 #messages > li.typing {
     align-self: center;
     margin-top: 0px;
+    align-items: center;
 }
 
 #messages > li > div.sender{
@@ -256,7 +261,7 @@ body {
 
 #messages > li > div { 
     overflow-wrap: break-word;
-    max-width: max-content;
+    max-width: 100%;
 }
 
 #messages > li > div.content{ 
@@ -265,6 +270,7 @@ body {
     border-radius: 25px 25px 25px 0px;
     margin-top: 15x;
     margin-bottom: 15px;
+    align-self: flex-start;
 }
 #messages > li > div.notification {
     background: none;
@@ -278,6 +284,7 @@ body {
 #messages > li > div.own {
     background: #6699ff;
     border-radius: 25px 25px 0px 25px;
+    align-self: flex-end;
 }
 
 #messages > li > div.typing {
